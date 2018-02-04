@@ -19,7 +19,7 @@ except ImportError:
 
 
 # data loader
-train_dataset = YoloDataset('/Users/Eric/ML/CellSegmentation/data/stage1_train')
+train_dataset = YoloDataset(os.path.abspath('../data/stage1_train'))
 train_dataloader = DataLoader(train_dataset, batch_size=cfg.train_batch_size, shuffle=True, num_workers=2)
 print('load data succ...')
 
