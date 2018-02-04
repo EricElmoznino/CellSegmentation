@@ -26,7 +26,7 @@ class YoloDataset(Dataset):
         self.data = []
         for s in samples:
             image = os.listdir(os.path.join(s, 'images'))
-            image = [os.path.join(dir, 'images', im) for im in image if '.png' in im][0]
+            image = [os.path.join(s, 'images', im) for im in image if '.png' in im][0]
 
             masks = os.listdir(os.path.join(s, 'masks'))
             masks = [os.path.join(s, 'masks', m) for m in masks if '.png' in m]
