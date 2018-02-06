@@ -43,7 +43,6 @@ def _process_batch(data, size_index):
     out_size = cfg.multi_scale_out_size[size_index]
 
     bbox_pred_np, gt_boxes, gt_classes, dontcares, iou_pred_np = data
-    print(bbox_pred_np.shape)
 
     # net output
     hw, num_anchors, _ = bbox_pred_np.shape
@@ -74,9 +73,11 @@ def _process_batch(data, size_index):
 
     # gt_boxes_b = np.asarray(gt_boxes[b], dtype=np.float)
     gt_boxes_b = np.asarray(gt_boxes, dtype=np.float)
+    print(gt_boxes.shape)
 
     # for each cell, compare predicted_bbox and gt_bbox
     bbox_np_b = np.reshape(bbox_np, [-1, 4])
+    print(bbox_np_b.shape)
     ious = bbox_ious(
         np.ascontiguousarray(bbox_np_b, dtype=np.float),
         np.ascontiguousarray(gt_boxes_b, dtype=np.float)
