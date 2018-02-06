@@ -68,7 +68,7 @@ def _process_batch(data, size_index):
         H, W)
     # bbox_np = (hw, num_anchors, (x1, y1, x2, y2))   range: 0 ~ 1
     bbox_np = bbox_np[0]
-    print(bbox_np.shape)
+    print(H, W)
     bbox_np[:, :, 0::2] *= float(inp_size[0])  # rescale x
     bbox_np[:, :, 1::2] *= float(inp_size[1])  # rescale y
 
