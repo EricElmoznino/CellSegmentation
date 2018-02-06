@@ -43,6 +43,7 @@ def _process_batch(data, size_index):
     out_size = cfg.multi_scale_out_size[size_index]
 
     bbox_pred_np, gt_boxes, gt_classes, dontcares, iou_pred_np = data
+    print(bbox_pred_np.shape)
 
     # net output
     hw, num_anchors, _ = bbox_pred_np.shape
