@@ -37,7 +37,6 @@ optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=cfg.momentum,
                             weight_decay=cfg.weight_decay)
 
 t = Timer()
-size_index = 0
 train_loss = 0
 bbox_loss, iou_loss, cls_loss = 0., 0., 0.
 for epoch in range(0, cfg.max_epoch):
@@ -50,7 +49,7 @@ for epoch in range(0, cfg.max_epoch):
         if torch.cuda.is_available():
             image = image.cuda()
 
-        net(image, bouding_boxes, classes, [[] for _ in range(cfg.train_batch_size)], size_index)
+        net(image, bouding_boxes, classes, [[] for _ in range(cfg.train_batch_size)], 0)
 
         loss = net.loss
         bbox_loss += net.bbox_loss.data.cpu().numpy()[0]
@@ -77,7 +76,6 @@ for epoch in range(0, cfg.max_epoch):
             train_loss = 0
             bbox_loss, iou_loss, cls_loss = 0., 0., 0.
             t.clear()
-            size_index = randint(0, len(cfg.multi_scale_inp_size) - 1)
             print("image_size {}".format(cfg.multi_scale_inp_size[size_index]))
 
     if epoch in cfg.lr_decay_epochs:
