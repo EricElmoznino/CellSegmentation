@@ -39,9 +39,9 @@ class YoloDataset(Dataset):
         image, bounding_boxes = self.data[item]['image'], self.data[item]['bounding_boxes']
 
         image = Image.open(image).convert('RGB')
-        scale_x = 418 / image.size[1]
-        scale_y = 418 / image.size[0]
-        image = tr.resize(image, [418, 418])
+        scale_x = 416 / image.size[1]
+        scale_y = 416 / image.size[0]
+        image = tr.resize(image, [416, 416])
         bounding_boxes[:, 0::2] *= scale_x
         bounding_boxes[:, 1::3] *= scale_y
 
