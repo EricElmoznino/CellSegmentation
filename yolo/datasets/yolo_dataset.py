@@ -51,7 +51,7 @@ class YoloDataset(Dataset):
                 'classes': np.zeros([len(bounding_boxes), 1], dtype=np.int)}
 
     @staticmethod
-    def collate_fn(self, batch):
+    def collate_fn(batch):
         images = [s['image'] for s in batch]
         bounding_boxes = [s['bounding_box'] for s in batch]
         classes = [s['classes'] for s in batch]
