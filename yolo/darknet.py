@@ -65,7 +65,7 @@ def _process_batch(data, size_index):
     bbox_np = yolo_to_bbox(
         np.ascontiguousarray(bbox_pred_np, dtype=np.float),
         anchors,
-        H, 20)
+        H, 8)
     # bbox_np = (hw, num_anchors, (x1, y1, x2, y2))   range: 0 ~ 1
     bbox_np = bbox_np[0]
     print(bbox_np.shape)
