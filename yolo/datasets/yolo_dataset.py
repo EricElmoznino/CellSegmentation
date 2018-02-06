@@ -8,7 +8,7 @@ import torch
 
 def mask_to_bounding_box(mask_path):
     mask = Image.open(mask_path).convert('L')
-    return np.array(mask.getbbox())
+    return np.array(mask.getbbox(), dtype=np.float32)
 
 
 class YoloDataset(Dataset):
@@ -42,8 +42,8 @@ class YoloDataset(Dataset):
         scale_x = 418 / image.size[1]
         scale_y = 418 / image.size[0]
         image = tr.resize(image, [418, 418])
-        bounding_boxes[:, 0::2] *= int(scale_x)
-        bounding_boxes[:, 1::3] *= int(scale_y)
+        bounding_boxes[:, 0::2] *= scale_x
+        bounding_boxes[:, 1::3] *= scale_y
 
         image = tr.to_tensor(image)
 
