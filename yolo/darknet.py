@@ -211,7 +211,7 @@ class Darknet19(nn.Module):
         iou_pred = F.sigmoid(global_average_pool_reshaped[:, :, :, 4:5])
 
         score_pred = global_average_pool_reshaped[:, :, :, 5:].contiguous()
-        prob_pred = F.softmax(score_pred.view(-1, score_pred.size()[-1])).view_as(score_pred)  # noqa
+        prob_pred = F.softmax(score_pred.view(-1, score_pred.size()[-1]), dim=1).view_as(score_pred)  # noqa
 
         # for training
         if self.training:
@@ -256,6 +256,7 @@ class Darknet19(nn.Module):
         """
 
         bsize = bbox_pred_np.shape[0]
+        print('XXXXXX-----'+str(bsize))
 
         targets = self.pool.map(partial(_process_batch, size_index=size_index),
                                 ((bbox_pred_np[b], gt_boxes[b],
