@@ -76,7 +76,6 @@ for epoch in range(0, cfg.max_epoch):
             train_loss = 0
             bbox_loss, iou_loss, cls_loss = 0., 0., 0.
             t.clear()
-            print("image_size {}".format(cfg.multi_scale_inp_size[size_index]))
 
     if epoch in cfg.lr_decay_epochs:
         lr *= cfg.lr_decay
