@@ -70,14 +70,13 @@ def _process_batch(data, size_index):
     bbox_np = bbox_np[0]
     bbox_np[:, :, 0::2] *= float(inp_size[0])  # rescale x
     bbox_np[:, :, 1::2] *= float(inp_size[1])  # rescale y
+    print(bbox_np.shape)
 
     # gt_boxes_b = np.asarray(gt_boxes[b], dtype=np.float)
     gt_boxes_b = np.asarray(gt_boxes, dtype=np.float)
-    print(gt_boxes.shape)
 
     # for each cell, compare predicted_bbox and gt_bbox
     bbox_np_b = np.reshape(bbox_np, [-1, 4])
-    print(bbox_np_b.shape)
     ious = bbox_ious(
         np.ascontiguousarray(bbox_np_b, dtype=np.float),
         np.ascontiguousarray(gt_boxes_b, dtype=np.float)
