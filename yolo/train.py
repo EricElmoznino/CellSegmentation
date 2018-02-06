@@ -50,7 +50,7 @@ for epoch in range(0, cfg.max_epoch):
         if torch.cuda.is_available():
             image = image.cuda()
 
-        net(image, bouding_boxes, classes, [], size_index)
+        net(image, bouding_boxes, classes, [[] for _ in range(cfg.train_batch_size)], size_index)
 
         loss = net.loss
         bbox_loss += net.bbox_loss.data.cpu().numpy()[0]
