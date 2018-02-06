@@ -53,8 +53,8 @@ class YoloDataset(Dataset):
     @staticmethod
     def collate_fn(batch):
         images = [s['image'] for s in batch]
-        bounding_boxes = [s['bounding_box'] for s in batch]
+        bounding_boxes = [s['bounding_boxes'] for s in batch]
         classes = [s['classes'] for s in batch]
         images = torch.cat(images)
-        return {'image': images, 'bounding_box': bounding_boxes, 'classes': classes}
+        return {'image': images, 'bounding_boxes': bounding_boxes, 'classes': classes}
 
