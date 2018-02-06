@@ -20,7 +20,8 @@ except ImportError:
 
 # data loader
 train_dataset = YoloDataset(os.path.abspath('../data/stage1_train'))
-train_dataloader = DataLoader(train_dataset, batch_size=cfg.train_batch_size, shuffle=True, num_workers=2)
+train_dataloader = DataLoader(train_dataset, batch_size=cfg.train_batch_size, shuffle=True,
+                              num_workers=2, collate_fn=YoloDataset.collate_fn)
 print('load data succ...')
 
 net = Darknet19()

@@ -50,3 +50,11 @@ class YoloDataset(Dataset):
         return {'image': image, 'bounding_boxes': bounding_boxes,
                 'classes': np.zeros([len(bounding_boxes), 1], dtype=np.int)}
 
+    @staticmethod
+    def collate_fn(self, batch):
+        images = [s['image'] for s in batch]
+        bounding_boxes = [s['bounding_box'] for s in batch]
+        classes = [s['classes'] for s in batch]
+        images = torch.cat(images)
+        return {'image': images, 'bounding_box': bounding_boxes, 'classes': classes}
+
