@@ -256,7 +256,8 @@ class Darknet19(nn.Module):
         """
 
         bsize = bbox_pred_np.shape[0]
-        print('XXXXXX-----'+str(bsize))
+
+        print(len(bbox_pred_np), len(gt_boxes), len(gt_classes), len(dontcare), len(iou_pred_np))
 
         targets = self.pool.map(partial(_process_batch, size_index=size_index),
                                 ((bbox_pred_np[b], gt_boxes[b],
