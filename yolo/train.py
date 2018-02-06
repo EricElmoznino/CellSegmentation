@@ -83,7 +83,6 @@ for epoch in range(0, cfg.max_epoch):
                                     momentum=cfg.momentum,
                                     weight_decay=cfg.weight_decay)
 
-    save_name = os.path.join(cfg.train_output_dir,
-                             '{}_{}.h5'.format(cfg.exp_name, epoch))
+    save_name = os.path.join('yolo-cells.h5'.format(cfg.exp_name, epoch))
     net_utils.save_net(save_name, net)
     print(('save model: {}'.format(save_name)))
