@@ -55,6 +55,6 @@ class YoloDataset(Dataset):
         images = [s['image'] for s in batch]
         bounding_boxes = [s['bounding_boxes'] for s in batch]
         classes = [s['classes'] for s in batch]
-        images = torch.cat(images)
+        images = torch.stack(images)
         return {'image': images, 'bounding_boxes': bounding_boxes, 'classes': classes}
 
