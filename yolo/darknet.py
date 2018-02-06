@@ -62,13 +62,13 @@ def _process_batch(data, size_index):
     # scale pred_bbox
     anchors = np.ascontiguousarray(cfg.anchors, dtype=np.float)
     bbox_pred_np = np.expand_dims(bbox_pred_np, 0)
-    print(bbox_pred_np.shape)
     bbox_np = yolo_to_bbox(
         np.ascontiguousarray(bbox_pred_np, dtype=np.float),
         anchors,
         H, W)
     # bbox_np = (hw, num_anchors, (x1, y1, x2, y2))   range: 0 ~ 1
     bbox_np = bbox_np[0]
+    print(bbox_np.shape)
     bbox_np[:, :, 0::2] *= float(inp_size[0])  # rescale x
     bbox_np[:, :, 1::2] *= float(inp_size[1])  # rescale y
 
