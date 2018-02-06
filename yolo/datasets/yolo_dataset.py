@@ -42,8 +42,8 @@ class YoloDataset(Dataset):
         scale_x = 418 / image.size[1]
         scale_y = 418 / image.size[0]
         image = tr.resize(image, [418, 418])
-        bounding_boxes[:, 0::2] *= scale_x
-        bounding_boxes[:, 1::3] *= scale_y
+        bounding_boxes[:, 0::2] *= float(scale_x)
+        bounding_boxes[:, 1::3] *= float(scale_y)
 
         image = tr.to_tensor(image)
 
