@@ -33,7 +33,7 @@ args = parser.parse_args()
 # ------------
 imdb_name = cfg.imdb_test
 # trained_model = cfg.trained_model
-trained_model = 'models/testing/cells_test/yolo-cells.weights.h5'
+trained_model = 'yolo-cells.weights.h5'
 output_dir = cfg.test_output_dir
 
 max_per_image = 300
