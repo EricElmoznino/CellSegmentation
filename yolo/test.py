@@ -59,7 +59,7 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
     for i, batch in enumerate(dataloader):
         orig_image = np.array(tr.to_pil_image(batch['image'][0]))
         image = batch['image']
-        truth_boxes = batch['bounding_boxes']
+        truth_boxes = batch['bounding_boxes'][0]
         image = Variable(image)
         if torch.cuda.is_available():
             image = image.cuda()
