@@ -5,9 +5,6 @@ import os
 import numpy as np
 import torch
 
-from PIL import ImageDraw
-import random
-
 
 def mask_to_bounding_box(mask_path):
     mask = Image.open(mask_path).convert('L')
@@ -47,13 +44,6 @@ class YoloDataset(Dataset):
         image = tr.resize(image, [320, 320])
         bounding_boxes[:, np.array([0, 2])] *= scale_x
         bounding_boxes[:, np.array([1, 3])] *= scale_y
-
-        draw = ImageDraw.Draw(image)
-        for b in bounding_boxes:
-            b = b.tolist()
-            draw.rectangle(b, outline='blue')
-        image.save('/Users/eric/Desktop/images/'+str(random.randint(0, 1000))+'.jpg')
-
         image = tr.to_tensor(image)
 
         return {'image': image, 'bounding_boxes': bounding_boxes,
