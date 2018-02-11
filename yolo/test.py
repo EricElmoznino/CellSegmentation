@@ -13,6 +13,8 @@ import cfgs.config as cfg
 import torch
 from torch.autograd import Variable
 from torchvision.transforms import functional as tr
+from PIL import Image, ImageDraw
+import random
 
 
 def preprocess(fname):
@@ -55,6 +57,7 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
     size_index = args.image_size_index
 
     for i, batch in enumerate(dataloader):
+        orig_image = np.array(tr.to_pil_image(batch['image'][0]))
         image = batch['image']
         image = Variable(image)
         if torch.cuda.is_available():
@@ -70,49 +73,17 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
         bboxes, scores, cls_inds = yolo_utils.postprocess(bbox_pred,
                                                           iou_pred,
                                                           prob_pred,
-                                                          np.array(tr.to_pil_image(batch['image'][0])).shape,
+                                                          orig_image.shape,
                                                           cfg,
                                                           thresh,
                                                           0
                                                           )
 
-        for j in range(1):
-            inds = np.where(cls_inds == j)[0]
-            if len(inds) == 0:
-                all_boxes[j][i] = np.empty([0, 5], dtype=np.float32)
-                continue
-            c_bboxes = bboxes[inds]
-            c_scores = scores[inds]
-            c_dets = np.hstack((c_bboxes,
-                                c_scores[:, np.newaxis])).astype(np.float32,
-                                                                 copy=False)
-            all_boxes[j][i] = c_dets
-
-        # Limit to max_per_image detections *over all classes*
-        if max_per_image > 0:
-            image_scores = np.hstack([all_boxes[j][i][:, -1]
-                                      for j in range(1)])
-            if len(image_scores) > max_per_image:
-                image_thresh = np.sort(image_scores)[-max_per_image]
-                for j in range(1, 1):
-                    keep = np.where(all_boxes[j][i][:, -1] >= image_thresh)[0]
-                    all_boxes[j][i] = all_boxes[j][i][keep, :]
-
-        if vis:
-            im2show = yolo_utils.draw_detection(np.array(tr.to_pil_image(batch['image'][0])),
-                                                bboxes,
-                                                scores,
-                                                cls_inds,
-                                                cfg,
-                                                thr=0.1)
-            if im2show.shape[0] > 1100:
-                im2show = cv2.resize(im2show,
-                                     (int(1000. * float(im2show.shape[1]) / im2show.shape[0]), 1000))  # noqa
-            cv2.imshow('test', im2show)
-            cv2.waitKey(0)
-
-    with open(det_file, 'wb') as f:
-        pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+        orig_image = Image.fromarray(orig_image)
+        draw = ImageDraw.Draw(orig_image)
+        for box in bboxes:
+            draw.rectangle(box, fill='blue')
+        orig_image.save('outputs/'+str(random.randint(0, 10000))+'.jpg')
 
 
 if __name__ == '__main__':
