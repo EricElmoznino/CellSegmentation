@@ -70,7 +70,7 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
         bboxes, scores, cls_inds = yolo_utils.postprocess(bbox_pred,
                                                           iou_pred,
                                                           prob_pred,
-                                                          np.array(tr.to_pil_image(batch['image'])).shape,
+                                                          np.array(tr.to_pil_image(batch['image'][0])).shape,
                                                           cfg,
                                                           thresh,
                                                           0
@@ -99,7 +99,7 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
                     all_boxes[j][i] = all_boxes[j][i][keep, :]
 
         if vis:
-            im2show = yolo_utils.draw_detection(np.array(tr.to_pil_image(batch['image'])),
+            im2show = yolo_utils.draw_detection(np.array(tr.to_pil_image(batch['image'][0])),
                                                 bboxes,
                                                 scores,
                                                 cls_inds,
