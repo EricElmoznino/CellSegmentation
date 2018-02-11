@@ -82,7 +82,7 @@ def test_net(net, dataloader, max_per_image=300, thresh=0.5, vis=False):
         orig_image = Image.fromarray(orig_image)
         draw = ImageDraw.Draw(orig_image)
         for box in bboxes:
-            draw.rectangle(box, fill='blue')
+            draw.rectangle([(box[0], box[1]), (box[2], box[3])], fill='blue')
         orig_image.save('outputs/'+str(random.randint(0, 10000))+'.jpg')
 
 
